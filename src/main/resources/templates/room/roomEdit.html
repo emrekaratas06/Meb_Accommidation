@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Room</title>
+</head>
+<body>
+<h2>Edit Room</h2>
+
+<form th:action="@{'/room/rooms/' + ${room.id}}" th:object="${room}" th:method="put">
+    <table>
+        <tr>
+            <td>ID:</td>
+            <td><input type="text" th:field="*{id}" readonly="readonly" /></td>
+        </tr>
+        <tr>
+            <td>Room Number:</td>
+            <td><input type="text" th:field="*{roomNumber}" /></td>
+        </tr>
+
+        <tr>
+            <td>Available From:</td>
+            <td><input type="date" th:field="*{availableFrom}" /></td>
+        </tr>
+
+        <tr>
+            <td>Available To:</td>
+            <td><input type="date" th:field="*{availableTo}" /></td>
+        </tr>
+
+        <tr>
+            <td>Status:</td>
+            <td><input type="checkbox" th:field="*{reservationSwitch}" /></td>
+        </tr>
+
+        <tr>
+            <td>Beds:</td>
+            <td><input type="number" th:field="*{beds}" /></td>
+        </tr>
+       <tr>
+            <td>Cost Per Night :</td>
+            <td><input type="number" th:field="*{costPerNight}" /></td>
+        </tr>
+
+        <tr>
+            <td>Room Type:</td>
+            <td><select id="txtRoomType01" name="roomType">
+                <option th:each="type : ${T(meb.gov.tr.meb_accommidation.entity.RoomType).values()}"
+                        th:value="${type}" th:text="${type.displayName}">
+                </option>
+            </select></td>
+        </tr>
+        <!-- Diğer alanlar için benzer şekilde inputlar ekleyebilirsiniz -->
+        <tr>
+            <td><button type="submit">Update Room</button></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

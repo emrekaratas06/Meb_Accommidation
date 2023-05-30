@@ -1,0 +1,35 @@
+.ui-datepicker-calendar .ui-state-default.available {
+    background-color: green;
+}
+
+.ui-datepicker-calendar .ui-state-default.reserved {
+    background-color: lightyellow;
+}
+
+.ui-datepicker-calendar .ui-state-default.occupied {
+    background-color: red;
+}
+
+.ui-datepicker .ui-datepicker-calendar .ui-state-default:before {
+    content: "";
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    border-radius: 50%;
+}
+
+.ui-datepicker .ui-datepicker-calendar .ui-state-default.available:before {
+    background-color: green;
+}
+
+.ui-datepicker .ui-datepicker-calendar .ui-state-default.reserved:before {
+    background-color: lightyellow;
+}
+
+.ui-datepicker .ui-datepicker-calendar .ui-state-default.occupied:before {
+    background-color: red;
+}
+.unavailable {
+    background-color: gray;
+}

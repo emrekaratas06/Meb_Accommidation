@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservations</title>
+</head>
+<body>
+<h1>Reservations</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Teacher Home</th>
+        <th>Room</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Guest Identity</th>
+        <th>Check In</th>
+        <th>Check Out</th>
+        <th>Totasl Cost</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="reservation : ${reservations}">
+        <td th:text="${reservation.id}"></td>
+        <td th:text="${reservation.room.teacherHome.name}"></td>
+        <td th:text="${reservation.room.roomNumber}">
+            <!-- Remove the default roomNumber dropdown and replace it with an empty container -->
+            <div id="roomNumberContainer">
+                <!-- Room list will be generated here -->
+            </div>
+        </td>
+        <td th:text="${reservation.rentalDate}"></td>
+        <td th:text="${reservation.returnDate}"></td>
+        <td>
+            <span th:each="guest : ${reservation.guests}" th:text="${guest.firstName} + ' ' + ${guest.lastName} + ', '"></span>
+        </td>
+        <td th:text="${reservation.checkIn}"></td>
+        <td th:text="${reservation.checkOut}"></td>
+        <td th:text="${reservation.totalCost}"></td>
+        <td>
+            <a th:href="@{/reservations/edit/{id}(id=${reservation.id})}">Edit</a>
+            <a th:href="@{/reservations/delete/{id}(id=${reservation.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/reservations/add">Add Reservation</a> </br>
+<a href="/reservations/find">Search Reservation</a>
+
+<script>
+    function updateRoomNumbers() {
+        const teacherHomeSelect = document.getElementById("teacherHomeId");
+        const teacherHomeId = teacherHomeSelect.value;
+        const startDate = document.getElementById("startDate").value;
+        const endDate = document.getElementById("endDate").value;
+
+        if (teacherHomeId && startDate && endDate) {
+            const url = `/api/availableRooms?teacherHomeId=${teacherHomeId}&startDate=${startDate}&endDate=${endDate}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(rooms => {
+                    let roomNumberSelect = '<select id="roomNumber" name="roomNumber">';
+                    rooms.forEach(room => {
+                        roomNumberSelect += `<option value="${room.roomNumber}">${room.roomNumber}</option>`;
+                    });
+                    roomNumberSelect += '</select>';
+
+                    document.getElementById("roomNumberContainer").innerHTML = roomNumberSelect;
+                });
+        } else {
+            document.getElementById("roomNumberContainer").innerHTML = '';
+        }
+    }
+
+    document.getElementById("teacherHomeId").addEventListener("change", updateRoomNumbers);
+    document.getElementById("startDate").addEventListener("change", updateRoomNumbers);
+    document.getElementById("endDate").addEventListener("change", updateRoomNumbers);
+
+    async function fetchRooms() {
+        const teacherHomeId = document.getElementById('teacherHome').value;
+        const roomSelect = document.getElementById('room');
+        roomSelect.innerHTML = '<option value="">--Select Room--</option>';
+
+        if (teacherHomeId) {
+            const response = await fetch(`/reservations/rooms-by-teacherhome01/${teacherHomeId}`);
+            const rooms = await response.json();
+
+            rooms.forEach(function(room) {
+                if (room.reservationSwitch === true) {
+                    const option = document.createElement("option");
+                    option.value = room.id;
+                    option.textContent = room.roomNumber;
+                    roomSelect.appendChild(option);
+                }
+            });
+        }
+    }
+</script>
+
+</body>
+</html>
+
+

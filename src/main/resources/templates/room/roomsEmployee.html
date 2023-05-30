@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rooms Status- jQuery UI Datepicker</title>
+    <link rel="stylesheet" href="/css/room-calendar.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+    <script src="/js/room-calendar.js"></script>
+
+</head>
+<body>
+<h1>Rooms Status</h1>
+<form th:action="@{/room/roomsEmployee}" method="get">
+    <select name="teacherHomeId">
+        <option th:each="teacherHome : ${teacherHomes}" th:value="${teacherHome.id}" th:text="${teacherHome.name}">Teacher Home</option>
+    </select>
+    <button type="submit">Show Rooms</button>
+</form>
+<div th:if="${selectedTeacherHome != null}">
+    <h2 th:text="${selectedTeacherHome.name}">Teacher Home</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Room Number</th>
+            <th>Room Type</th>
+            <th>Status</th>
+            <th>Payment Status</th>
+            <th>Calendar</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="room : ${selectedTeacherHome.roomList}">
+            <td th:text="${room.roomNumber}">Room Number</td>
+            <td th:text="${room.roomType}">Room Type</td>
+            <td th:text="${room.roomStatuses}">Status</td>
+            <td th:text="${room.payment != null ? room.payment.paymentStatus : 'No Payment'}">Payment Status</td>
+            <td>
+                <table>
+                    <tr th:each="day : ${days}">
+                        <td th:class="${roomService.isRoomAvailable(room.id, day) ? 'available' : 'unavailable'}" th:text="${day}"></td>
+                    </tr>
+                </table>
+            </td>
+
+            <td>
+                <div class="room-calendar"
+                     th:data-room-id="${room.id}" th:data-room-dates="${room.statusDates}"></div>
+                <script th:inline="javascript">
+                    var roomId = [[${room.id}]];
+                    var statusDates = [[${room.statusDates}]];
+                    console.log(statusDates);
+                </script>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

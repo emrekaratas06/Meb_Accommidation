@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payments List</title>
+</head>
+<body>
+<h1>Payments List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Payment ID</th>
+        <th>Reservation ID</th>
+        <th>Payment Type</th>
+        <th>Amount</th>
+        <th>Payment Status</th>
+        <th>Payment Date</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="payment : ${payments}">
+        <td th:text="${payment.id}"></td>
+        <td th:text="${payment.reservation.id}"></td>
+        <td th:text="${payment.paymentType}"></td>
+        <td th:text="${payment.amount}"></td>
+        <td th:text="${payment.paymentStatus}"></td>
+        <td th:text="${payment.paymentDate}"></td>
+    </tr>
+    </tbody>
+</table>
+<h2>Total Amount: <span th:text="${totalAmount}"></span></h2>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Reservation</title>
+    <script>
+        async function fetchRooms() {
+            const teacherHomeId = document.getElementById('teacherHome').value;
+            const roomSelect = document.getElementById('room');
+            roomSelect.innerHTML = '<option value="">--Select Room--</option>';
+
+            if (teacherHomeId) {
+                const response = await fetch(`/reservations/rooms-by-teacherhome01/${teacherHomeId}`);
+                const rooms = await response.json();
+
+                rooms.forEach(function(room) {
+                    if (room.reservationSwitch) { // Sadece Reservation Switch değeri true olan kayıtları listele
+                        const option = document.createElement("option");
+                        option.value = room.id;
+                        option.textContent = room.roomNumber;
+                        roomSelect.appendChild(option);
+                    }
+                });
+            }
+        }
+    </script>
+    <style>
+        .error-message {
+            color: red;
+        }
+        .success-message {
+            color: green;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+
+</head>
+<body>
+<h1>Add Reservation</h1>
+<form action="#" th:action="@{/reservations/add}" method="post">
+    <table>
+        <tr>
+            <td>Teacher Home :</td>
+            <td>
+                <select id="teacherHome" name="teacherHomeId" required onchange="fetchRooms()">
+                    <option value="">--Select Teacher Home--</option>
+                    <option th:each="teacherHome : ${teacherHomes}" th:value="${teacherHome.id}" th:text="${teacherHome.name}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>RoomNumber : </td>
+            <td>
+                <select id="room" name="roomId" required>
+                    <option value="">--Select Room--</option>
+                </select>
+            </td>
+        </tr>
+    <!-- Diğer alanlar (tarihler, konuk sayısı vb.) -->
+        <tr>
+            <td>Start Date: </td>
+            <td><input type="date" id="startDate" name="startDate" required>
+                <span class="error-message" th:if="${#fields.hasErrors('reservation.startDate')}" th:errors="*{reservation.startDate}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>End Date : </td>
+            <td><input type="date" id="endDate" name="endDate" required>
+                <span class="error-message" th:if="${#fields.hasErrors('reservation.endDate')}" th:errors="*{reservation.endDate}"></span>
+            </td>
+        </tr>
+        <!-- Guests alanı ve hata mesajı -->
+        <tr>
+            <td>Guests Id:</td>
+            <td>
+                <select id="guests" name="guests" multiple required>
+                    <option th:each="guest : ${guests}" th:value="${guest.id}" th:text="${guest.firstName} + ' ' + ${guest.lastName}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Check In : </td>
+            <td><input type="time" id="checkIn" name="checkIn" required></td>
+        </tr>
+        <tr>
+            <td>Check Out : </td>
+            <td><input type="time" id="checkOut" name="checkOut" required></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Add Reservation</button></td>
+        </tr>
+    </table>
+    <div th:if="${reservation.reservationRefCode}" class="success-message">
+        Your reservation reference code: <span th:text="${reservation.reservationRefCode}"></span>
+    </div>
+</form>
+</br>
+    <!--payment-form.html sayfasının dahil edildiği kısım-->
+    <div th:replace="payment-form :: payment-form"></div>
+</body>
+</html>

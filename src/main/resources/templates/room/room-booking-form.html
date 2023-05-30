@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Room Booking Form</title>
+</head>
+<body>
+    <h1>Room Booking Form</h1>
+    <form method="post" th:action="@{/book-room}">
+        <p>
+            <label for="room">Room:</label>
+            <select id="room" name="room" required>
+                <option th:each="room : ${rooms}" th:value="${room}" th:text="${room}"></option>
+            </select>
+        </p>
+        <p>
+            <label for="startDate">Start Date:</label>
+            <input type="date" id="startDate" name="startDate" required/>
+        </p>
+        <p>
+            <label for="endDate">End Date:</label>
+            <input type="date" id="endDate" name="endDate" required/>
+        </p>
+        <p>
+            <button type="submit">Book Room</button>
+        </p>
+    </form>
+</body>
+</html>

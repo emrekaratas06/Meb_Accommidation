@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Reservation</title>
+    <script>
+        async function fetchRooms() {
+            const teacherHomeId = document.getElementById('teacherHome').value;
+            const roomSelect = document.getElementById('room');
+            roomSelect.innerHTML = '<option value="">--Select Room--</option>';
+
+            if (teacherHomeId) {
+                const response = await fetch(`/reservations/rooms-by-teacherhome01/${teacherHomeId}`);
+                const rooms = await response.json();
+
+                rooms.forEach(function(room) {
+                    const option = document.createElement("option");
+                    option.value = room.id;
+                    option.textContent = room.roomNumber;
+                    roomSelect.appendChild(option);
+                });
+            }
+        }
+    </script>
+    <style>
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>Edit Reservation</h1>
+<form action="#" th:action="@{/reservations/update}" method="post">
+    <input type="hidden" name="id" th:value="${reservation.id}"/>
+    <table>
+        <tr>
+            <td>Teacher Home :</td>
+            <td>
+                <select id="teacherHome" name="teacherHomeId" required onchange="fetchRooms()" th:value="${reservation.room.teacherHome.id}">
+                    <option value="">--Select Teacher Home--</option>
+                    <option th:each="teacherHome : ${teacherHomes}" th:value="${teacherHome.id}" th:text="${teacherHome.name}"
+                            th:selected="${teacherHome.id == (reservation.room != null ? reservation.room.teacherHome.id : null)}"></option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>RoomNumber : </td>
+            <td>
+                <select id="room" name="roomId" required th:value="${reservation.room.id}">
+                    <option value="">--Select Room--</option>
+                    <option th:each="room : ${rooms}" th:value="${room.id}" th:text="${room.roomNumber}"
+                            th:selected="${room.id}"></option>
+                </select>
+            </td>
+        </tr>
+        <!-- Diğer alanlar (tarihler, konuk sayısı vb.) -->
+        <tr>
+            <td>Start Date: </td>
+            <td><input type="date" id="startDate" name="startDate" required th:value="${reservation.startDate}" value="${reservation.startDate}" />
+                <span class="error-message" th:if="${#fields.hasErrors('reservation.startDate')}" th:errors="*{reservation.startDate}"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>End Date : </td>
+            <td><input type="date" id="endDate" name="endDate" required th:value="${reservation.endDate}">
+                <span class="error-message" th:if="${#fields.hasErrors('reservation.endDate')}" th:errors="*{reservation.endDate}"></span>
+            </td>
+        </tr>
+        <!-- Guests alanı ve hata mesajı -->
+        <tr>
+            <td>Guests Id:</td>
+            <td>
+                <select id="guests" name="guests" multiple required>
+                    <option th:each="guest : ${guests}" th:value="${guest.id}" th:text="${guest.firstName} + ' ' + ${guest.lastName}"></option>
+                </select>
+
+            </td>
+        </tr>
+        <tr>
+            <td>Check In : </td>
+            <td><input type="time" id="checkIn" name="checkIn" required thvalue="${reservation.checkIn}"></td>
+        </tr>
+        <tr>
+            <td>Check Out : </td>
+            <td><input type="time" id="checkOut" name="checkOut" required th:value="${reservation.checkOut}"></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Update Reservation</button></td>
+        </tr>
+    </table>
+
+</form>
+<script>
+    // Sayfa yüklenirken, mevcut öğretmen evine göre odaları getir ve seçili odayı işaretle
+    window.addEventListener('load', async () => {
+        await fetchRooms();
+        document.getElementById('room').value = '${reservation.room.id}';
+    });
+</script>
+</body>
+</html>

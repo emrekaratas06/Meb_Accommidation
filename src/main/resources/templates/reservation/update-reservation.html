@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Reservation</title>
+</head>
+<body>
+    <form th:action="@{/updateReservation}" th:method="post">
+        <input type="hidden" th:name="roomId" th:value="${room.id}" />
+        <input type="hidden" th:name="startDate" th:value="${availability.startDate}" />
+        <input type="hidden" th:name="endDate" th:value="${availability.endDate}" />
+        <label for="availability">Availability:</label>
+        <select id="availability" name="availability" th:value="${availability.available}">
+            <option value="true" th:selected="${availability.available}">Available</option>
+            <option value="false" th:selected="${!availability.available}">Not Available</option>
+        </select>
+        <button type="submit">Update</button>
+    </form>
+</body>
+</html>

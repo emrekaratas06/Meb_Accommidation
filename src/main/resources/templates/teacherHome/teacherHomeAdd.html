@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Teacher Home</title>
+</head>
+<body>
+<h2>Add Teacher Home</h2>
+
+<form th:action="@{/teacherHome/teacherHomes}" method="post">
+    <table>
+        <tr>
+            <td>Province: </td>
+            <td><input type="text" id="txtProvinceEdit" name="province"/></td>
+        </tr>
+        <tr>
+            <td>District:</td>
+            <td><input type="text" id="txtProvinceDistrict" name="district"/></td>
+        </tr>
+        <tr>
+            <td>Address: </td>
+            <td><input type="text" id="txtProvinceAddress" name="address"/></td>
+        </tr>
+        <tr>
+            <td>Name: </td>
+            <td><input type="text" id="txtProvinceName" name="name" /></td>
+        </tr>
+        <tr>
+            <td>Email: </td>
+            <td><input type="text" id="txtProvinceEmail" name="email" /></td>
+        </tr>
+        <tr>
+            <td>Phone Number: </td>
+            <td><input type="text" id="txtProvincePhoneNumber" name="phoneNumber" placeholder=""/></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Add Teacher Home</button></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

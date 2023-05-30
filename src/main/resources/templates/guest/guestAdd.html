@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Guest</title>
+</head>
+<body>
+<h2>Add Guest</h2>
+
+<form th:action="@{/guest/guests}" method="post">
+    <table>
+        <tr>
+            <td>First Name:</td>
+            <td><input type="text" id="firstName" name="firstName"/></td>
+        </tr>
+        <tr>
+            <td>Last Name:</td>
+            <td><input type="text" id="lastName" name="lastName"/></td>
+        </tr>
+        <tr>
+            <td>E-mail:</td>
+            <td><input type="text" id="email" name="email"/></td>
+        </tr>
+        <tr>
+            <td>Phone:</td>
+            <td><input type="text" id="phone" name="phone"/></td>
+        </tr>
+        <tr>
+            <td>Guest Type : </td>
+            <td>
+                <select id="guestType" name="guestType">
+                    <option value="MebPeople">Meb People</option>
+                    <option value="StatePeople">State People</option>
+                    <option value="Person">Person</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Child ?:</td>
+            <td>
+                <select id="child" name="child">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Gender:</td>
+            <td>
+                <select id="gender" name="gender">
+                    <option value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><button type="submit">Add Guest</button></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

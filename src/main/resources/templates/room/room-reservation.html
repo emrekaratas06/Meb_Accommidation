@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Room-Reservation</title>
+</head>
+<body>
+<form th:action="@{/reserveRoom}" method="post">
+    <label for="startDate">Check-in Date:</label>
+    <input type="date" id="startDate" name="startDate" required>
+    <br><br>
+    <label for="endDate">Check-out Date:</label>
+    <input type="date" id="endDate" name="endDate" required>
+    <br><br>
+    <label for="roomType">Room Type:</label>
+    <select id="roomType" name="roomType" required>
+        <option value="SingleRoom">Single Room</option>
+        <option value="DoubleRoom">Double Room</option>
+        <option value="Suite">Suite</option>
+        <option value="TwinA_TwinB">TwinA_TwinB</option>
+        <option value="TripleRoom">TripleRoom</option>
+        <option value="Double_TwinA">Double_TwinA</option>
+        <option value="other">Other</option>
+    </select>
+    <br><br>
+    <button type="submit">Reserve Room</button>
+</form>
+</body>
+</html>
+

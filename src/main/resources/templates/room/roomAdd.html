@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Room</title>
+</head>
+<body>
+<h2>Add Room</h2>
+
+<form th:action="@{/room/rooms}" method="post">
+    <table>
+        <tr>
+            <td>Teacher Home:</td>
+            <td>
+                <select id="dllteacherHomeAdd" name="teacherHomeId">
+                    <option th:value="${null}">Select a Teacher Home</option>
+                    <option th:each="teacherHome : ${teacherHomes}"
+                            th:value="${teacherHome.id}"
+                            th:text="${teacherHome.name}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>RoomNumber: </td>
+            <td><input type="text" id="txtRoomNumber" name="roomNumber"/></td>
+        </tr>
+        <tr>
+            <td>AvailableFrom: </td>
+            <td><input type="date" id="txtAvailableFrom" name="availableFrom" /></td>
+        </tr>
+        <tr>
+            <td>AvailableTo: </td>
+            <td><input type="date" id="txtAvailableTo" name="availableTo" /></td>
+        </tr>
+        <tr>
+            <td>Reservation Switch: </td>
+            <td>
+                <select id="txtReservationSwitch" name="reservationSwitch">
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>RoomType: </td>
+            <td><select id="txtRoomType01" name="roomType">
+                <option th:each="type : ${T(meb.gov.tr.meb_accommidation.entity.RoomType).values()}"
+                        th:value="${type}" th:text="${type.displayName}">
+                </option>
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Beds: </td>
+            <td><input type="text" id="txtBeds" name="beds"/></td>
+        </tr>
+        <tr>
+            <td>CostPerNight: </td>
+            <td><input type="text" id="txtCostPerNight" name="costPerNight"/></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Add Room</button></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Find Reservation</title>
+</head>
+<body>
+<h2>Find Reservation</h2>
+
+<form th:action="@{/reservations}" method="get">
+  <table>
+    <tr>
+      <td>Guest ID: </td>
+      <td><input type="text" name="guestId"/></td>
+    </tr>
+    <tr>
+      <td>Guest Name: </td>
+      <td><input type="text" name="guestName"/></td>
+    </tr>
+    <tr>
+      <td>Start Date : </td>
+      <td><input type="date" name="startDate"></td>
+    </tr>
+    <tr>
+      <td>End Date : </td>
+      <td><input type="date" name="endDate"></td>
+    </tr>
+    <tr>
+      <td><input type="submit" value="Search"/></td>
+    </tr>
+  </table>
+</form>
+
+</body>
+</html>

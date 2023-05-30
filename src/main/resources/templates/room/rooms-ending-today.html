@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Rooms Ending Today</title>
+</head>
+<body>
+    <h1>Rooms Ending Today</h1>
+    <ul>
+        <li th:each="room : ${endingRooms}" th:text="${room.name}"></li>
+    </ul>
+</body>
+</html>

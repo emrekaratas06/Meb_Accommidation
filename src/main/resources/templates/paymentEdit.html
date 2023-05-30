@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Edit</title>
+</head>
+<body>
+<h1>Edit Payment</h1>
+
+<form th:action="@{/payments/update}" method="post">
+    <input type="hidden" name="id" th:value="${payment.id}" />
+
+    <div>
+        <label for="amount">Amount:</label>
+        <input type="text" id="amount" name="amount" th:value="${payment.amount}" required>
+    </div>
+
+    <div>
+        <label for="paymentDate">Payment Date:</label>
+        <input type="text" id="paymentDate" name="paymentDate" th:value="${payment.paymentDate}" required>
+    </div>
+
+    <button type="submit">Update Payment</button>
+</form>
+
+<form th:action="@{/payments/refund}" method="post">
+    <input type="hidden" name="id" th:value="${payment.id}" />
+    <button type="submit">Refund Payment</button>
+</form>
+</body>
+</html>

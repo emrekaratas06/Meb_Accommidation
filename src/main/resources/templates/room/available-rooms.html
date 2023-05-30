@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Room Availability</title>
+</head>
+<body>
+    <h1>Room Availability</h1>
+
+    <h2>Rooms available from <span th:text="${startDate}"></span> to <span th:text="${endDate}"></span>:</h2>
+    <ul>
+        <li th:each="room : ${availableRooms}" th:text="${room.roomNumber}"></li>
+    </ul>
+
+    <h1>Available Rooms</h1>
+    <p>Available Rooms for <span th:text="${#dates.format(startDate, 'dd.MM.yyyy')}"></span> - <span th:text="${#dates.format(endDate, 'dd.MM.yyyy')}"></span></p>
+    <table>
+        <thead>
+        <tr>
+            <th>Room Number</th>
+            <th>Room Type</th>
+            <th>Price per Night</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="room : ${availableRooms}">
+            <td th:text="${room.roomNumber}"></td>
+            <td th:text="${room.roomType}"></td>
+            <td th:text="${room.pricePerNight}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

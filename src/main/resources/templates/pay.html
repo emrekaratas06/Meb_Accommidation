@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Payment Form</title>
+</head>
+<body>
+<div th:fragment="payment-form">
+    <h1>Payment Form</h1>
+    <!-- Payment form code here -->
+    <form th:action="@{/confirm-payment}" method="post">
+        <input type="hidden" name="reservationRefCode" th:value="${reservation.reservationRefCode}" />
+        <input type="hidden" name="amount" th:value="${reservation.totalCost}" />
+
+        <div>
+            <label for="cardHolderName">Cardholder Name:</label>
+            <input type="text" id="cardHolderName" name="cardHolderName" required>
+        </div>
+
+        <div>
+            <label for="cardNumber">Card Number:</label>
+            <input type="text" id="cardNumber" name="cardNumber" required>
+        </div>
+
+        <div>
+            <label for="expiryMonth">Expiry Month:</label>
+            <input type="text" id="expiryMonth" name="expiryMonth" placeholder="MM" required>
+        </div>
+
+        <div>
+            <label for="expiryYear">Expiry Year:</label>
+            <input type="text" id="expiryYear" name="expiryYear" placeholder="YYYY" required>
+        </div>
+
+        <div>
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" name="cvv" placeholder="123" required>
+        </div>
+
+        <button type="submit">Pay Now</button>
+    </form>
+
+    <p>Reservation Ref Code: <span th:text="${reservation.reservationRefCode}"></span></p>
+    <p>Start Date: <span th:text="${reservation.startDate}"></span></p>
+    <p>End Date: <span th:text="${reservation.endDate}"></span></p>
+    <p>Total Cost: <span th:text="${reservation.totalCost}"></span></p>
+</div>
+</body>
+</html>

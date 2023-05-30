@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Teacher Homes</title>
+</head>
+<body>
+<h1>All Teacher Homes</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Province</th>
+        <th>District</th>
+        <th>Email</th>
+        <th>Phone Number</th>
+        <th> </th>
+        <th> </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="teacherHome : ${teacherHomes}">
+        <td th:text="${teacherHome.id}"></td>
+        <td th:text="${teacherHome.name}"></td>
+        <td th:text="${teacherHome.address}"></td>
+        <td th:text="${teacherHome.province}"></td>
+        <td th:text="${teacherHome.district}"></td>
+        <td th:text="${teacherHome.email}"></td>
+        <td th:text="${teacherHome.phoneNumber}"></td>
+        <td>
+            <form th:action="@{'/teacherHome/teacherHome/edit/'+${teacherHome.id}}">
+                <button type="submit">Edit</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{'/teacherHome/teacherHome/delete/'+${teacherHome.id}}" method="post" style="display:inline">
+                <input type="hidden" name="_method" value="delete" />
+                <button type="submit" onclick="return confirm('Are you sure you want to delete this record?')">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/teacherHome/teacherHomeAdd">Add Teacher Home</a>
+</body>
+</html>

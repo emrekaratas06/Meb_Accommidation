@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Rezervasyon Düzenle</title>
+    <script>
+        async function fetchRooms(selectedRoomId) {
+            const teacherHomeId = document.getElementById('teacherHome').value;
+            const roomSelect = document.getElementById('room');
+            roomSelect.innerHTML = '<option value="">--Select Room--</option>';
+
+            if (teacherHomeId) {
+                const response = await fetch(`/reservations/rooms-by-teacherhome/${teacherHomeId}`);
+                const rooms = await response.json();
+
+                rooms.forEach(function(room) {
+                    const option = document.createElement("option");
+                    option.value = room.id;
+                    option.textContent = room.roomNumber;
+                    option.selected = room.id === selectedRoomId;
+                    roomSelect.appendChild(option);
+                });
+            }
+        }
+
+        function selectCurrentGuests() {
+            const guestsSelect = document.getElementById('guests');
+            const currentGuests = JSON.parse(guestsSelect.dataset.currentGuests);
+
+            for (let i = 0; i < guestsSelect.options.length; i++) {
+                const option = guestsSelect.options[i];
+                if (currentGuests.some(guest => guest.id === parseInt(option.value))) {
+                    option.selected = true;
+                }
+            }
+        }
+    </script>
+</head>
+<!--<body onload="fetchRooms(${reservation.room.id}); selectCurrentGuests();">-->
+<body>
+<h1>Rezervasyon Düzenle</h1>
+<form action="#" th:action="@{/reservations/update}" method="post">
+    <input type="hidden" name="id" th:value="${reservation.id}">
+
+    <div>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" name="startDate" th:value="${reservation.startDate}" required>
+    </div>
+    <div>
+        <label for="endDate">End Date:</label>
+        <input type="date" id="endDate" name="endDate" th:value="${reservation.endDate}" required>
+    </div>
+    <div>
+        <label for="guests">Guests:</label>
+        <input type="number" id="guests" name="guests" th:value="${reservation.guests}" required>
+    </div>
+    <div>
+        <label for="teacherHome">Teacher Home:</label>
+        <select id="teacherHome" name="teacherHomeId" required onchange="fetchRooms()" disabled>
+            <option value="">--Select Teacher Home--</option>
+            <option th:each="teacherHome : ${teacherHomes}" th:value="${teacherHome.id}" th:text="${teacherHome.name}" th:selected="${teacherHome.id == reservation.room.teacherHome.id}"></option>
+        </select>
+    </div>
+    <div>
+        <label for="room">Room:</label>
+        <select id="room" name="roomId" required>
+            <option value="">--Select Room--</option>
+        </select>
+    </div>
+    <div>
+        <label for="checkIn">Check In:</label>
+        <input type="text" id="checkIn" name="checkIn" th:value="${reservation.checkIn}" required>
+    </div>
+    <div>
+        <label for="checkOut">Check Out:</label>
+        <input type="text" id="checkOut" name="checkOut" th:value="${reservation.checkOut}" required>
+    </div>
+    <div>
+        <button type="submit">Update Reservation</button>
+    </div>
+</form>
+<script>
+    fetchRooms(); // Sayfa yüklendiğinde mevcut öğretmenevine ait odaları yükle
+</script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!-- room-list.html -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Room List</title>
+</head>
+<body>
+<h1>Room List</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Room Number</th>
+        <th>Room Type</th>
+        <th>Available From</th>
+        <th>Available To </th>
+        <th>Cost Per Night</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="room : ${rooms}">
+        <td th:text="${room.roomNumber}"></td>
+        <td th:text="${room.getRoomType()}"></td>
+        <td th:text="${room.getAvailableFrom()}"></td>
+        <td th:text="${room.getAvailableTo()}"></td>
+        <td th:text="${room.getCostPerNight()}"></td>
+        <td><a th:href="@{/reservations/add}">Reservation</a>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
+
+</body>
+</html>

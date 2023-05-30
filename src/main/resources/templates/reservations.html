@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Reservations</title>
+</head>
+<body>
+<h1>Reservations</h1>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Teacher Home</th>
+        <th>Room</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Guest Identity</th>
+        <th>Check In</th>
+        <th>Check Out</th>
+        <th>Total Cost</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="reservation : ${reservations}">
+        <td th:text="${reservation.id}"></td>
+        <td th:text="${reservation.room.teacherHome.name}"></td>
+        <td th:text="${reservation.room.roomNumber}"></td>
+        <td th:text="${reservation.startDate}"></td>
+        <td th:text="${reservation.endDate}"></td>
+        <td>
+            <span th:each="guest : ${reservation.guests}" th:text="${guest.firstName} + ' ' + ${guest.lastName} + ', '"></span>
+        </td>
+        <td th:text="${reservation.checkIn}"></td>
+        <td th:text="${reservation.checkOut}"></td>
+        <td th:text="${reservation.calculateDiscountedTotalCost()}"></td>
+        <td>
+            <a th:href="@{/reservations/edit/{id}(id=${reservation.id})}">Edit</a>
+            <a th:href="@{/reservations/delete/{id}(id=${reservation.id})}">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a href="/reservations/add">Add Reservation</a> </br></br>
+<a href="/reservations/find">Search Reservation</a>
+</body>
+</html>

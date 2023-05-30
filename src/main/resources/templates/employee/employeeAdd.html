@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Employee</title>
+</head>
+<body>
+<h2>Add Employee</h2>
+
+<form th:action="@{/employee/employees}" method="post">
+    <table>
+        <tr>
+            <td>Identity Number : </td>
+            <td><input type="text" id="txtIdentityNumber" name="employeeTcNo"/></td>
+        </tr>
+        <tr>
+            <td>TeacherHome: </td>
+                <td>
+                    <select id="dllteacherHomeAdd" name="teacherHomeId">
+                        <option th:value="${null}">Select a Teacher Home</option>
+                        <option th:each="teacherHome : ${teacherHomes}"
+                                th:value="${teacherHome.id}"
+                                th:text="${teacherHome.name}">
+                        </option>
+                    </select>
+                </td>
+        </tr>
+        <tr>
+            <td>First Name: </td>
+            <td><input type="text" id="txtfirstName" name="firstName"/></td>
+        </tr>
+        <tr>
+            <td> Last Name: </td>
+            <td><input type="text" id="txtAvailableFrom" name="lastName" /></td>
+        </tr>
+        <tr>
+            <td>RoomType: </td>
+            <td>  <select id="txtEmployeeType01" name="employeeType">
+                    <option th:each="type : ${T(meb.gov.tr.meb_accommidation.entity.EmployeeType).values()}"
+                            th:value="${type}" th:text="${type.displayName}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Phone Number: </td>
+            <td><input type="text" id="txtAvailableTo" name="phone" /></td>
+        </tr>
+        <tr>
+            <td>E-Mail: </td>
+            <td><input type="text" id="txtStatus" name="email" /></td>
+        </tr>
+        <tr>
+            <td><button type="submit">Add Employee</button></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>

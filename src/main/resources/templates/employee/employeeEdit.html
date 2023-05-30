@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employees</title>
+</head>
+<body>
+<h2>Edit Employees</h2>
+
+<form th:action="@{'/employee/update/' + ${employee.employeeId}}" th:object="${employee}" method="post">
+    <table>
+        <tr>
+            <td>Id: </td>
+            <td><input type="text" id="txtIdEdit" name="employeeId"  th:value="${employee.employeeId}"/></td>
+        </tr>
+        <tr>
+            <td>Identity Number: </td>
+            <td><input type="text" id="txtEmpNumberEdit" name="employeeTcNo"  th:value="${employee.employeeTcNo}"/></td>
+        </tr>
+        <tr>
+            <td>Teacher Home: </td>
+            <td>
+                <select id="dllteacherHomeAdd" name="teacherHomeId">
+                    <option th:value="${null}">Select a Teacher Home</option>
+                    <option th:each="teacherHome : ${teacherHomes}"
+                            th:value="${teacherHome.id}"
+                            th:text="${teacherHome.name}">
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>First Name : </td>
+            <td><input type="text" id="firstName" name="firstName"  th:value="${employee.firstName}"/></td>
+        </tr>
+        <tr>
+            <td>Last Name: </td>
+            <td><input type="text" id="lastName" name="lastName" th:value="${employee.lastName}"/></td>
+        </tr>
+        <tr>
+            <td>Phone Number: </td>
+            <td><input type="text" id="phone" name="phone" th:value="${employee.phone}"/></td>
+        </tr>
+        <tr>
+            <td>Reservation Switch(Status): </td>
+            <td><input type="text" id="email" name="email" th:value="${employee.email}"/></td>
+        </tr>
+        <tr>
+            <td>EmployeeType: </td>
+            <td>
+                <select id="txtEmployeeType01" name="employeeType">
+                <option th:each="type : ${T(meb.gov.tr.meb_accommidation.entity.EmployeeType).values()}"
+                        th:value="${type}" th:text="${type.displayName}">
+                </option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td><button type="submit">Employee Edit</button></td>
+        </tr>
+    </table>
+</form>
+
+</body>
+</html>
